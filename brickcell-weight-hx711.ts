@@ -2,7 +2,7 @@
  * MakeCode editor extension for HX711 Differential 24 bit A/D for weight sensors
  * by David Ferrer - (c)2019
  * MIT License
-  */
+ */
 
 //% color="#FFBF00" icon="\uf12e" weight=70
 namespace Brickcell {
@@ -185,8 +185,6 @@ namespace Brickcell {
         return read_average(times) - OFFSET
     }
 
-
-
     function get_scale(): number {
         return SCALE;
     }
@@ -199,28 +197,7 @@ namespace Brickcell {
         return OFFSET;
     }
 
-    //% blockId="brickcell_weight_hx711_power_down"
-    //% block="power down"
-    //% weight=90 blockGap=8
-    //% subcategory="weight hx711"
-    export function power_down() {
-        pins.digitalWritePin(PD_SCK, 0)
-        pins.digitalWritePin(PD_SCK, 1)
-    }
-
-    //% blockId="brickcell_weight_hx711_power_up"
-    //% block="power up"
-    //% weight=90 blockGap=8
-    //% subcategory="weight hx711"
-    export function power_up() {
-        pins.digitalWritePin(PD_SCK, 0)
-    }
-
-    //% blockId="brickcell_weight_hx711_get_units"
-    //% block="Get units"
-    //% weight=80 blockGap=8
-    //% subcategory="weight hx711"
-    export function get_units(times: number): number {
+    function get_units(times: number): number {
         let valor: number = 0
 
         valor = get_value(times) / SCALE
@@ -228,6 +205,9 @@ namespace Brickcell {
         return valor
     }
 
+    /**
+     * Read weight from HX711
+     */
     //% blockId="brickcell_weight_hx711_read_weight"
     //% block="Read weight"
     //% weight=80 blockGap=8
@@ -237,18 +217,38 @@ namespace Brickcell {
         let ceros: string = "";
         let valor_string: string = "";
 
-        valor = get_units(1)
-
+        valor = get_units(1);
         if (Math.abs(Math.round((valor - Math.trunc(valor)) * 100)).toString().length == 0) {
             ceros = "00"
         } else if (Math.abs(Math.round((valor - Math.trunc(valor)) * 100)).toString().length == 1) {
             ceros = "0"
         }
         valor_string = "" + Math.trunc(valor) + "." + ceros + Math.abs(Math.round((valor - Math.trunc(valor)) * 100))
-
         return valor_string;
     }
 
+    /**
+     * Power down HX711
+     */
+    //% blockId="brickcell_weight_hx711_power_down"
+    //% block="power down"
+    //% weight=90 blockGap=8
+    //% subcategory="weight hx711"
+    export function power_down() {
+        pins.digitalWritePin(PD_SCK, 0)
+        pins.digitalWritePin(PD_SCK, 1)
+    }
+
+    /**
+     * Power up HX711
+     */
+    //% blockId="brickcell_weight_hx711_power_up"
+    //% block="power up"
+    //% weight=90 blockGap=8
+    //% subcategory="weight hx711"
+    export function power_up() {
+        pins.digitalWritePin(PD_SCK, 0)
+    }
 }
 
 // Original: https://github.com/daferdur/pxt-myHX711/
