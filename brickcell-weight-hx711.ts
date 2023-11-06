@@ -36,6 +36,8 @@ namespace Brickcell {
         SCALE = 422;
     }
 
+
+
     function is_ready(): boolean {
         return (pins.digitalReadPin(DOUT) == 0)
     }
@@ -55,6 +57,8 @@ namespace Brickcell {
         pins.digitalWritePin(PD_SCK, 0)
         read()
     }
+
+
 
     function shiftInSlow(bitOrder: number): number {
         let value: number = 0
@@ -249,6 +253,16 @@ namespace Brickcell {
     //% subcategory="weight hx711"
     export function power_up() {
         pins.digitalWritePin(PD_SCK, 0)
+    }
+
+    /**
+     * Set calibration multiplier / scale
+     */
+    //% blockId="brickcell_weight_hx711_set_multiplier"
+    //% block="set multiplier"
+    //% subcategory="weight hx711"
+    export function set_multiplier(scale: number = 422) {
+        SCALE = scale;
     }
 }
 
