@@ -28,11 +28,12 @@ namespace Brickcell {
 
         // set tare
         let sum: number = 0;
-        sum = read_average(20);
+        sum = read_average(10);
         set_offset(sum);
 
         // set SCALE
-        SCALE = 2280;
+        //SCALE = 2280;
+        SCALE = 422;
     }
 
     function is_ready(): boolean {
